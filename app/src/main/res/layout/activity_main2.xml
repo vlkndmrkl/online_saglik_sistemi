@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.voikan.onlinesalksistemi.Main2Activity">
+
+
+    <ImageButton
+        android:background="@drawable/anaekranbtnselector"
+        app:srcCompat="@mipmap/doct"
+        android:id="@+id/imgbtndoktorum"
+        android:layout_row="0"
+        android:layout_column="1"
+        android:layout_width="145dp"
+        android:layout_height="142dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/imgbtngunluk"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="16dp"
+        app:layout_constraintHorizontal_bias="0.43" />
+
+    <ImageButton
+        android:layout_width="145dp"
+        android:layout_height="142dp"
+        app:srcCompat="@mipmap/randevu"
+        android:id="@+id/imgbtnrandevu"
+        android:layout_row="3"
+        android:background="@drawable/anaekranbtnselector"
+        android:layout_column="0"
+        app:layout_constraintTop_toBottomOf="@+id/txtgunluk"
+        android:layout_marginStart="32dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="32dp" />
+
+    <ImageButton
+        android:layout_width="145dp"
+        android:layout_height="142dp"
+        app:srcCompat="@mipmap/complaints"
+        android:id="@+id/imgbtngunluk"
+        android:layout_row="0"
+        android:layout_column="0"
+        android:background="@drawable/anaekranbtnselector"
+        android:elevation="0dp"
+        android:layout_marginStart="32dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="32dp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:text="Günlük Bilgiler"
+        android:gravity="center"
+        android:layout_width="143dp"
+        android:textSize="18sp"
+        android:id="@+id/txtgunluk"
+        android:layout_row="1"
+        android:layout_column="0"
+        android:background="@drawable/anaekrantextview"
+        app:layout_constraintTop_toBottomOf="@+id/imgbtngunluk"
+        android:layout_marginStart="32dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="32dp"
+        android:layout_height="25dp" />
+
+    <TextView
+        android:text="Doktorum"
+        android:id="@+id/txtdoktorum"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:background="@drawable/anaekrantextview"
+        android:layout_height="25dp"
+        app:layout_constraintTop_toBottomOf="@+id/imgbtndoktorum"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/txtgunluk"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="16dp"
+        android:layout_width="143dp" />
+
+    <TextView
+        android:text="Randevu Geçmişi"
+        android:layout_width="143dp"
+        android:layout_height="25dp"
+        android:id="@+id/txtrandevu"
+        app:layout_constraintTop_toBottomOf="@+id/imgbtnrandevu"
+        android:layout_marginStart="32dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="32dp"
+        android:textSize="18sp"
+        android:background="@drawable/anaekrantextview" />
+
+    <TextView
+        android:text="Tahlil Sonuçları"
+        android:gravity="center"
+        android:layout_width="143dp"
+        android:layout_height="25dp"
+        android:id="@+id/txttahlil"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/txtrandevu"
+        android:layout_marginLeft="8dp"
+        android:textSize="18sp"
+        android:background="@drawable/anaekrantextview" />
+
+    <ImageButton
+        android:layout_width="145dp"
+        android:layout_height="142dp"
+        app:srcCompat="@mipmap/tahlil"
+        android:id="@+id/imageButton"
+        android:background="@drawable/anaekranbtnselector"
+        app:layout_constraintTop_toBottomOf="@+id/txtdoktorum"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/imgbtnrandevu"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="16dp"
+        app:layout_constraintHorizontal_bias="0.4" />
+
+    <ImageButton
+        android:layout_width="145dp"
+        android:layout_height="142dp"
+        app:srcCompat="@mipmap/kullaniciislem"
+        android:id="@+id/imageButton2"
+        app:layout_constraintTop_toBottomOf="@+id/txtrandevu"
+        android:layout_marginStart="32dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:background="@drawable/anaekranbtnselector"
+        android:layout_marginLeft="32dp" />
+
+    <TextView
+        android:text="Kullanıcı İşlemleri"
+        android:layout_width="143dp"
+        android:layout_height="25dp"
+        android:id="@+id/txtkullaniciislem"
+        android:textSize="18sp"
+        android:background="@drawable/anaekrantextview"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton2"
+        android:layout_marginStart="32dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="32dp" />
+
+    <TextView
+        android:text="Şikayet"
+        android:layout_width="143dp"
+        android:layout_height="25dp"
+        android:id="@+id/txtsikayet"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/anaekrantextview"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/imgbtnsikayet"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/txtkullaniciislem"
+        android:layout_marginLeft="8dp"
+        android:gravity="center"
+        android:textSize="18sp" />
+
+    <ImageButton
+        android:layout_width="145dp"
+        android:layout_height="142dp"
+        app:srcCompat="@mipmap/sikayet"
+        android:id="@+id/imgbtnsikayet"
+        app:layout_constraintTop_toBottomOf="@+id/txttahlil"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/anaekranbtnselector"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/imageButton2"
+        android:layout_marginLeft="8dp" />
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_giris"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.voikan.onlinesalksistemi.giris">
+
+    <Button
+        android:text="Giriş"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btngiris"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/chbxbeni_hatirla"
+        android:layout_marginStart="134dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="134dp"
+        android:layout_marginEnd="134dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="134dp" />
+
+    <EditText
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/etxtkullanici_adi"
+        android:hint="Kullanıcı Adı"
+        android:focusable="true"
+        android:layout_width="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/etxtgirissifre"
+        android:hint="Şifre"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/etxtkullanici_adi"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <CheckBox
+        android:text="Beni Hatırla"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chbxbeni_hatirla"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/etxtgirissifre"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="200dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="200dp" />
+
+</android.support.constraint.ConstraintLayout>
