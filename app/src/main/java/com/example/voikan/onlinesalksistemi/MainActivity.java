@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent istek = new Intent(getApplicationContext(), giris.class);
                 startActivity(istek);
              //   deneme();
+                Toast.makeText(MainActivity.this, "Merhaba", Toast.LENGTH_SHORT).show();
             }
         });
     }
