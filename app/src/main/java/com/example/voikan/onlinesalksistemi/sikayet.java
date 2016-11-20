@@ -1,11 +1,9 @@
 package com.example.voikan.onlinesalksistemi;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,62 +14,53 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.w3c.dom.Text;
+import java.util.HashMap;
+import java.util.Map;
 
 public class sikayet extends AppCompatActivity {
-
+    TextView tv;
     Button btn;
-    EditText et;
-
-
+    private String value;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sikayet);
-        btn = (Button) findViewById(R.id.buttonrandevugetirme);
-        et=(EditText) findViewById(R.id.editTextrandevugetirme);
+        Bundle extras = getIntent().getExtras();
+        value= extras.getString("send_string");
+        btn=(Button) findViewById(R.id.btnsikayet_gonder);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getir();
+                mesaj_gonder();
             }
         });
+
     }
-    protected void getir() {
-        final TextView txt= ((TextView) findViewById(R.id.etxtkullanici_adi));
-        et=(EditText) findViewById(R.id.editTextrandevugetirme);
+    public void mesaj_gonder(){
+        final String mesajiniz = ((TextView) findViewById(R.id.etxtsikayet_mesaj)).getText().toString();
+        final String baslik = ((TextView) findViewById(R.id.etxtsikayet_baslik)).getText().toString();
         RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
-        String url = "http://mynodeapp3.herokuapp.com/randevu_getir";
-        StringRequest MyStringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+        String url = "https://mynodeapp3.herokuapp.com/mesaj_gonder";
+        StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                final String strJson = "{\"Randevular\" :"+response+"}";
-                try {
-                    JSONObject o = new JSONObject(strJson);
-                    JSONArray value = o.getJSONArray("Randevular");
-                    StringBuilder sb = new StringBuilder();
-                    for (int i =0; i< value.length();i++){
-                        JSONObject sonuc = value.getJSONObject(i);
-                        sb.append("id= " + sonuc.getString("_id")+"\n");
-                        sb.append("ad= " + sonuc.getString("ad")+"\n");
-                        sb.append("soyad= " + sonuc.getString("soyad")+"\n");
-                        sb.append("tarih= " + sonuc.getString("tarih")+"\n");
-                        sb.append("username= " + sonuc.getString("username")+"\n\n\n");
-                    }
-                    et.setText(sb.toString());
-                } catch (JSONException e) {
-                    Toast.makeText(sikayet.this, "HATA", Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(sikayet.this, "Mesajınız Gönderildi", Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(sikayet.this, "Bilinmeyen bir hata oluştu", Toast.LENGTH_LONG).show();
+                Toast.makeText(sikayet.this, "Mesaj Gönderilemedi", Toast.LENGTH_SHORT).show();
             }
-        }) ;
+        }) {
+            protected Map<String, String> getParams() {
+                Map<String, String> MyData = new HashMap<String, String>();
+                MyData.put("id", value);
+                MyData.put("baslik", baslik);
+                MyData.put("mesaj", mesajiniz);
+                return MyData;
+            }
+        };
         MyRequestQueue.add(MyStringRequest);
     }
+
 }

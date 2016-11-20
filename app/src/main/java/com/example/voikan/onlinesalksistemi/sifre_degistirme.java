@@ -30,13 +30,18 @@ public class sifre_degistirme extends AppCompatActivity {
         yeni_sifre2=(EditText) findViewById(R.id.etxtyeni_sifre_tekrar);
         Bundle extras = getIntent().getExtras();
         value = extras.getString("send_string");
-        final String eskisifre=((EditText) findViewById(R.id.etxtyeni_sifre)).getText().toString();
-        final String eskisifre2=((EditText) findViewById(R.id.etxtyeni_sifre_tekrar)).getText().toString();
+        final String yenisifrestring=((EditText) findViewById(R.id.etxtyeni_sifre)).getText().toString();
+        final String yenisifre2string=((EditText) findViewById(R.id.etxtyeni_sifre_tekrar)).getText().toString();
         degistir=(Button)findViewById(R.id.btnsifre_degistir);
         degistir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            if (eskisifre.equals(eskisifre2)) sifre_degistir();
+            if (yeni_sifre.getText().toString().equals(yeni_sifre2.getText().toString())) {
+                sifre_degistir();
+            }
+                else{
+                Toast.makeText(sifre_degistirme.this, "Girilen şifreler eşleşmiyor", Toast.LENGTH_SHORT).show();
+            }
             }
         });
     }
@@ -48,7 +53,7 @@ public class sifre_degistirme extends AppCompatActivity {
         StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(sifre_degistirme.this, "Şifre Değiştirme İşlemi Başarı İle Gerçekleşti", Toast.LENGTH_SHORT).show();
+                Toast.makeText(sifre_degistirme.this, "Şifre Değiştirme İşlemi Başarılı", Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
             @Override

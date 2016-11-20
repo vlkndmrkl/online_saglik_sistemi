@@ -73,7 +73,7 @@ public class giris extends AppCompatActivity {
                     Toast.makeText(giris.this, "Kullanıcı adı şifre hatalı", Toast.LENGTH_SHORT).show();
                 } else {
                     id=response.substring(7,31);
-                    Intent intent = new Intent(giris.this,sifre_degistirme.class);
+                    Intent intent = new Intent(giris.this,sikayet.class);
                     intent.putExtra("send_string", id.toString());
                     startActivity(intent);
                 }

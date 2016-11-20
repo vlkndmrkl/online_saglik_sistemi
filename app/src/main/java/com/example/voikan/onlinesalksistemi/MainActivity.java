@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent istek = new Intent(getApplicationContext(), giris.class);
                 startActivity(istek);
              //   deneme();
-                Toast.makeText(MainActivity.this, "Merhaba", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -69,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         final String username = ((TextView) findViewById(R.id.etxtkullanici_adi)).getText().toString();
         final String password = ((TextView) findViewById(R.id.etxtgirissifre)).getText().toString();
         RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
-        String url = "https://mynopeadd22.herokuapp.com/add_user";
+        String url = "https://mynopeadd3.herokuapp.com/add_user";
         StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

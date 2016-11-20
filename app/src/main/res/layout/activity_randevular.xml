@@ -7,10 +7,19 @@
     android:layout_height="match_parent"
     tools:context="com.example.voikan.onlinesalksistemi.randevular">
 
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/editTextrandevulardeneme"
+        android:visibility="invisible" />
+
     <ListView
         android:layout_width="368dp"
-        android:layout_height="495dp"
+        android:layout_height="wrap_content"
         tools:layout_editor_absoluteY="8dp"
         tools:layout_editor_absoluteX="8dp"
-        android:id="@+id/lstrandevular" />
+        android:id="@+id/lstrandevular"
+        android:visibility="visible" />
 </android.support.constraint.ConstraintLayout>
