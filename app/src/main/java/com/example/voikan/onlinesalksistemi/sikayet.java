@@ -1,5 +1,6 @@
 package com.example.voikan.onlinesalksistemi;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,7 +20,7 @@ import java.util.Map;
 
 public class sikayet extends AppCompatActivity {
     TextView tv;
-    Button btn;
+    Button btn,btn2;
     private String value;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,13 +29,20 @@ public class sikayet extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         value= extras.getString("send_string");
         btn=(Button) findViewById(R.id.btnsikayet_gonder);
+        btn2 = (Button) findViewById(R.id.btnmesaj_goster);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mesaj_gonder();
             }
         });
-
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent istek = new Intent(getApplicationContext(), mesaj_gor.class);
+                startActivity(istek);
+            }
+        });
     }
     public void mesaj_gonder(){
         final String mesajiniz = ((TextView) findViewById(R.id.etxtsikayet_mesaj)).getText().toString();
