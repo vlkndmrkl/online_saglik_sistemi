@@ -1,6 +1,7 @@
 package com.example.voikan.onlinesalksistemi;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.http.RequestQueue;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -21,23 +24,37 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static android.R.layout.simple_list_item_1;
 
 public class mesaj_gor extends AppCompatActivity {
 
     ListView mesajlar;
     private String icerik[];
+
+    public void setGelen_id(String gelen_id) {
+        this.gelen_id = gelen_id;
+    }
+
+    private String gelen_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mesaj_gor);
         mesajlar=(ListView) findViewById(R.id.lstmesaj_gor);
-        mesaj_getir();
+        Intent inten = getIntent();
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null){
+            setGelen_id(bundle.getString("send_string"));
+            mesaj_getir(gelen_id);
+        }
     }
-    public void mesaj_getir() {
-        com.android.volley.RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
-        String url = "https://mynodeapp3.herokuapp.com/mesaj_all";
-        StringRequest MyStringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+    public void mesaj_getir(final String gelen) {
+        com.android.volley.RequestQueue MyRequestQueue = Volley.newRequestQueue(getApplicationContext());
+        String adres = "http://mynodeapp3.herokuapp.com/mesaj_getir";
+        StringRequest MyStringRequest = new StringRequest(Request.Method.POST, adres, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 final String strJson = "{\"Mesajlar\" :" + response + "}";
@@ -72,9 +89,31 @@ public class mesaj_gor extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(mesaj_gor.this, "Bilinmeyen bir hata oluştu", Toast.LENGTH_LONG).show();
+                NetworkResponse networkResponse=error.networkResponse;
+                if (networkResponse !=null && networkResponse.statusCode==404)
+                    Toast.makeText(mesaj_gor.this, "Mesaj Bulunamadı", Toast.LENGTH_SHORT).show();
+                else if (networkResponse !=null && networkResponse.statusCode==500)
+                    Toast.makeText(mesaj_gor.this, "Bilinmeyen Bir Hata Oluştu Tekrar Deneyiniz", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(mesaj_gor.this, "Hata"+error, Toast.LENGTH_SHORT).show();
             }
-        });
+        }){
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String>  headers = new HashMap<String, String>();
+                headers.put("Content-Type","application/x-www-form-urlencoded");
+
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("user_id",gelen);
+                return params;
+            }
+        };
         MyRequestQueue.add(MyStringRequest);
     }
     public class ListClickHandler implements AdapterView.OnItemClickListener {

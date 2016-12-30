@@ -32,42 +32,41 @@ public class randevular extends AppCompatActivity {
         et=(EditText)findViewById(R.id.editTextrandevulardeneme);
         randevu = (ListView) findViewById(R.id.lstrandevular);
         getir();
-
     }
     protected void getir() {
-        RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
-        String url = "http://mynodeapp3.herokuapp.com/randevu_getir";
-        StringRequest MyStringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                final String strJson = "{\"Randevular\" :"+response+"}";
-                try {
-                    JSONObject o = new JSONObject(strJson);
-                    JSONArray value = o.getJSONArray("Randevular");
-                    String randevudizi[]=new String[value.length()];
-                    for (int i =0; i< value.length();i++){
-                        JSONObject sonuc = value.getJSONObject(i);
-                        String id=("id= " + sonuc.getString("_id")+"\n");
-                        String ad=("ad= " + sonuc.getString("ad")+"\n");
-                        String soyad=("soyad= " + sonuc.getString("soyad")+"\n");
-                        String tarih=("tarih= " + sonuc.getString("tarih")+"\n");
-                        String username=("username= " + sonuc.getString("username")+"\n");
-                        randevudizi[i]= String.valueOf(id+ad+soyad+tarih+username);
+        if (true) {
+            RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
+            String url = "http://mynodeapp3.herokuapp.com/randevu_getir";
+            StringRequest MyStringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    final String strJson = "{\"Randevular\" :" + response + "}";
+                    try {
+                        JSONObject o = new JSONObject(strJson);
+                        JSONArray value = o.getJSONArray("Randevular");
+                        String randevudizi[] = new String[value.length()];
+                        for (int i = 0; i < value.length(); i++) {
+                            JSONObject sonuc = value.getJSONObject(i);
+                            String id = ("id= " + sonuc.getString("_id") + "\n");
+                            String ad = ("ad= " + sonuc.getString("ad") + "\n");
+                            String soyad = ("soyad= " + sonuc.getString("soyad") + "\n");
+                            String tarih = ("tarih= " + sonuc.getString("tarih") + "\n");
+                            String username = ("username= " + sonuc.getString("username") + "\n");
+                            randevudizi[i] = String.valueOf(id + ad + soyad + tarih + username);
+                        }
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(randevular.this, simple_list_item_1, randevudizi);
+                        randevu.setAdapter(adapter);
+                    } catch (JSONException e) {
+                        Toast.makeText(randevular.this, "HATA", Toast.LENGTH_SHORT).show();
                     }
-                    ArrayAdapter<String> adapter=new ArrayAdapter<String>(randevular.this,simple_list_item_1,randevudizi);
-                    randevu.setAdapter(adapter);
                 }
-                catch (JSONException e) {
-                    Toast.makeText(randevular.this, "HATA", Toast.LENGTH_SHORT).show();
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(randevular.this, "Bilinmeyen bir hata oluştu", Toast.LENGTH_LONG).show();
                 }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(randevular.this, "Bilinmeyen bir hata oluştu", Toast.LENGTH_LONG).show();
-            }
-        }) ;
-        MyRequestQueue.add(MyStringRequest);
-
+            });
+            MyRequestQueue.add(MyStringRequest);
+        }
     }
 }

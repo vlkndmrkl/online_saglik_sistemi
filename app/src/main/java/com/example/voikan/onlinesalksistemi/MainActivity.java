@@ -14,6 +14,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -40,10 +41,7 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String TAG = MainActivity.class.getSimpleName();
-
-    final String REGISTER_URL = "https://mynodeapp6.herokuapp.com/add_user";
-    private RequestQueue requestQueue;
+    private int mStatusCodegelen=0;
     Button btn1;
 
     @Override
@@ -54,9 +52,7 @@ public class MainActivity extends AppCompatActivity {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent istek = new Intent(getApplicationContext(), giris.class);
-                startActivity(istek);
-             //   deneme();
+                deneme();
             }
         });
     }
@@ -67,29 +63,45 @@ public class MainActivity extends AppCompatActivity {
         final String mail = ((TextView) findViewById(R.id.etxtadres)).getText().toString();
         final String username = ((TextView) findViewById(R.id.etxtkullanici_adi)).getText().toString();
         final String password = ((TextView) findViewById(R.id.etxtgirissifre)).getText().toString();
-        RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
-        String url = "https://mynopeadd3.herokuapp.com/add_user";
+       // RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
+        String url = "https://mynodeapp3.herokuapp.com/add_user";
         StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
+                Toast.makeText(MainActivity.this, ""+mStatusCodegelen, Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast.makeText(MainActivity.this, ""+mStatusCodegelen, Toast.LENGTH_SHORT).show();
             }
-        }) {
+        })
+        {
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                mStatusCodegelen = response.statusCode;
+                return super.parseNetworkResponse(response);
+            }
+
+            @Override
+            protected VolleyError parseNetworkError(VolleyError volleyError) {
+                mStatusCodegelen=volleyError.networkResponse.statusCode;
+                return super.parseNetworkError(volleyError);
+            }
+
             protected Map<String, String> getParams() {
                 Map<String, String> MyData = new HashMap<String, String>();
-                MyData.put("firstname;", "volkan");
-                MyData.put("lastname;", "demirkol");
-                MyData.put("email;", "asd@gmail.com");
-                MyData.put("username;", "deneme");
-                MyData.put("password;", "123");
+                MyData.put("name", "q");
+                MyData.put("lastname", "q");
+                MyData.put("email", "q");
+                MyData.put("password", "q");
+                MyData.put("doktor_durum", "0");
+                MyData.put("doktor_id", "1");
+                MyData.put("dogumTarihi;", "10-12-2016");
                 return MyData;
             }
         };
+        RequestQueue MyRequestQueue = Volley.newRequestQueue(getApplicationContext());
         MyRequestQueue.add(MyStringRequest);
     }
 }

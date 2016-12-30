@@ -34,6 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.app.Activity;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -43,8 +44,6 @@ import com.android.volley.toolbox.Volley;
 
 public class giris extends AppCompatActivity {
     Button btn;
-    TextView ad, sifre;
-    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +54,6 @@ public class giris extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 deneme();
-                ad = (TextView) findViewById(R.id.etxtkullanici_adi);
-                sifre = (TextView) findViewById(R.id.etxtgirissifre);
             }
         });
     }
@@ -64,29 +61,41 @@ public class giris extends AppCompatActivity {
         final String username = ((TextView) findViewById(R.id.etxtkullanici_adi)).getText().toString();
         final String password = ((TextView) findViewById(R.id.etxtgirissifre)).getText().toString();
         RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
-        String url = "https://mynodeapp3.herokuapp.com/get_user?username="+username.toString();
-        StringRequest MyStringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+        String url = "https://mynodeapp3.herokuapp.com/login";
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        String id= response;
+                        String id2=new String(id.substring(1,(response.length()-1)));
+                        Intent intent = new Intent(giris.this,mesaj_gor.class);
+                        intent.putExtra("send_string", id2);
+                        startActivity(intent);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        NetworkResponse networkResponse=error.networkResponse;
+                        if (networkResponse !=null && networkResponse.statusCode==404)
+                            Toast.makeText(giris.this, "Kayıt Bulunamadı", Toast.LENGTH_SHORT).show();
+                        else if (networkResponse !=null && networkResponse.statusCode==401)
+                            Toast.makeText(giris.this, "Şifre Yanlış", Toast.LENGTH_SHORT).show();
+                        else if (networkResponse !=null && networkResponse.statusCode==500)
+                            Toast.makeText(giris.this, "Bilinmeyen Bir Hata Oluştu Tekrar Deneyiniz", Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(giris.this, "Girilen Şifre Yanlış", Toast.LENGTH_SHORT).show();
+                    }
+                }){
             @Override
-            public void onResponse(String response) {
-                String durum=response.substring(0,5);
-                if (durum.equals("false") ){
-                    Toast.makeText(giris.this, "Kullanıcı adı şifre hatalı", Toast.LENGTH_SHORT).show();
-                } else {
-                    id=response.substring(7,31);
-                    Intent intent = new Intent(giris.this,sikayet.class);
-                    intent.putExtra("send_string", id.toString());
-                    startActivity(intent);
-                }
+            protected Map getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("email", username.toString());
+                params.put("password", password.toString());
+                return params;
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(giris.this, "Bilinmeyen bir hata oluştu", Toast.LENGTH_LONG).show();
-            }
-        }) ;
-        MyRequestQueue.add(MyStringRequest);
+        };
+        MyRequestQueue.add(stringRequest);
     }
-
-
 }
 

@@ -12,7 +12,10 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+
+        </activity>
+
         <activity
             android:name=".Main2Activity"
             android:screenOrientation="portrait" />
@@ -27,7 +30,9 @@
         </activity>
         <activity
             android:name=".gunluk_bilgiler"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity
             android:name=".sikayet"
             android:screenOrientation="portrait" />
@@ -49,7 +54,10 @@
         <activity android:name=".randevular">
 
         </activity>
-        <activity android:name=".mesaj_gor" />
+        <activity android:name=".mesaj_gor">
+            android:screenOrientation="portrait"
+            
+        </activity>
     </application>
 
 </manifest>

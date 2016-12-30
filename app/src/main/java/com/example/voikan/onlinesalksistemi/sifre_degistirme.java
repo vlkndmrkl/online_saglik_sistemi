@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -17,10 +18,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class sifre_degistirme extends AppCompatActivity {
     EditText eski_sifre,yeni_sifre,yeni_sifre2;
     Button degistir;
-    String value;
+    private String gelen_id;
+    int statukod;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,15 +34,13 @@ public class sifre_degistirme extends AppCompatActivity {
         yeni_sifre=(EditText) findViewById(R.id.etxtyeni_sifre);
         yeni_sifre2=(EditText) findViewById(R.id.etxtyeni_sifre_tekrar);
         Bundle extras = getIntent().getExtras();
-        value = extras.getString("send_string");
-        final String yenisifrestring=((EditText) findViewById(R.id.etxtyeni_sifre)).getText().toString();
-        final String yenisifre2string=((EditText) findViewById(R.id.etxtyeni_sifre_tekrar)).getText().toString();
+        gelen_id = extras.getString("send_string");
         degistir=(Button)findViewById(R.id.btnsifre_degistir);
         degistir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
             if (yeni_sifre.getText().toString().equals(yeni_sifre2.getText().toString())) {
-                sifre_degistir();
+                sifre_kontrol();
             }
                 else{
                 Toast.makeText(sifre_degistirme.this, "Girilen şifreler eşleşmiyor", Toast.LENGTH_SHORT).show();
@@ -46,21 +49,73 @@ public class sifre_degistirme extends AppCompatActivity {
         });
     }
 
-    protected void sifre_degistir() {
-        final String password = ((EditText) findViewById(R.id.etxtyeni_sifre)).getText().toString();
+    protected void sifre_kontrol() {
+
+        final String oldpassword = eski_sifre.getText().toString();
         RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
-        String url = "https://mynodeapp3.herokuapp.com/sifre_guncelle?id="+value.toString()+"&sifre="+password.toString();
+        String url = "http://mynodeapp3.herokuapp.com/eski_sifre_kontrol";
         StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(sifre_degistirme.this, "Şifre Değiştirme İşlemi Başarılı", Toast.LENGTH_SHORT).show();
+                if (statukod==200){
+                    sifre_degistir();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(sifre_degistirme.this, "Bilinmeyen bir hata oluştu", Toast.LENGTH_LONG).show();
+                NetworkResponse networkResponse=error.networkResponse;
+                if (networkResponse !=null && networkResponse.statusCode==500)
+                    Toast.makeText(sifre_degistirme.this, "Bilinmeyen Bir Hata Olşutu", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(sifre_degistirme.this, "Eski Şifreyi Yanlış Girdiniz", Toast.LENGTH_SHORT).show();
             }
-        }) ;
+         }){
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+               statukod=response.statusCode;
+                return super.parseNetworkResponse(response);
+            }
+
+            @Override
+        protected Map getParams() {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("user_id", gelen_id);
+            params.put("eskiSifre", oldpassword);
+            return params;
+        }
+    };
+    MyRequestQueue.add(MyStringRequest);
+    }
+    protected void sifre_degistir(){
+        final String password = ((EditText) findViewById(R.id.etxtyeni_sifre)).getText().toString();
+        RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
+        String url = "http://mynodeapp3.herokuapp.com/sifre_guncelle";
+        StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(sifre_degistirme.this, "Şifre Değiştirildi", Toast.LENGTH_LONG).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(sifre_degistirme.this, "Bilinmeyen Bir Hata Oluştu", Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                statukod=response.statusCode;
+                return super.parseNetworkResponse(response);
+            }
+
+            @Override
+            protected Map getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("yeniSifre", password.toString());
+                params.put("user_id", gelen_id);
+                return params;
+            }
+        };
         MyRequestQueue.add(MyStringRequest);
     }
 }
