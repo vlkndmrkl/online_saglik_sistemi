@@ -53,31 +53,93 @@
         android:layout_width="93dp"
         android:layout_height="97dp"
         android:id="@+id/btn11"
-        android:layout_marginTop="36dp"
+        android:background="@drawable/anaekranbtnselector"
+        android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@+id/btnTarih_degistir"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="24dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="16dp"
-        android:background="@drawable/anaekranbtn" />
+        android:layout_marginLeft="24dp" />
 
     <Button
         android:text="11:30"
-        android:layout_width="141dp"
-        android:layout_height="125dp"
+        android:layout_width="93dp"
         android:id="@+id/btn1130"
+        android:background="@drawable/anaekranbtnselector"
+        android:layout_height="97dp"
+        app:layout_constraintTop_toBottomOf="@+id/btnTarih_degistir"
         android:layout_marginStart="8dp"
         app:layout_constraintLeft_toRightOf="@+id/btn11"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/btnTarih_degistir" />
+        app:layout_constraintRight_toLeftOf="@+id/btn12"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="16dp" />
 
     <Button
         android:text="12:00"
-        android:layout_width="141dp"
-        android:layout_height="122dp"
+        android:layout_width="93dp"
+        android:layout_height="97dp"
         android:id="@+id/btn12"
-        tools:layout_editor_absoluteX="117dp"
+        android:background="@drawable/anaekranbtnselector"
         android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/btn1130" />
+        app:layout_constraintTop_toBottomOf="@+id/btnTarih_degistir"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="24dp" />
+
+    <Button
+        android:text="12:30"
+        android:layout_width="93dp"
+        android:layout_height="97dp"
+        android:id="@+id/btn1230"
+        android:background="@drawable/anaekranbtnselector"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/btn11"
+        android:layout_marginStart="24dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="24dp" />
+
+    <Button
+        android:text="13:00"
+        android:layout_width="93dp"
+        android:layout_height="97dp"
+        android:id="@+id/btn13"
+        android:background="@drawable/anaekranbtnselector"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/btn1130"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/btn1230"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintRight_toLeftOf="@+id/btn1330"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp" />
+
+    <Button
+        android:text="13:30"
+        android:layout_width="93dp"
+        android:layout_height="97dp"
+        android:id="@+id/btn1330"
+        android:background="@drawable/anaekranbtnselector"
+        app:layout_constraintTop_toBottomOf="@+id/btn12"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:text="*Rengi yeşil olan saattler randevu almak için uygundur. Kırmızı olanlar ise başka bir kullanıcı tarafından alınmıştır."
+        android:layout_width="340dp"
+        android:id="@+id/txtacıklamarandevu"
+        android:layout_height="73dp"
+        android:textSize="18sp"
+        tools:textColor="@android:color/holo_red_light"
+        android:layout_marginTop="64dp"
+        app:layout_constraintTop_toBottomOf="@+id/btn13"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="16dp" />
 
 </android.support.constraint.ConstraintLayout>

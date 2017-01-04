@@ -84,7 +84,6 @@
         android:layout_width="143dp" />
 
     <TextView
-        android:text="Randevu Geçmişi"
         android:layout_width="143dp"
         android:layout_height="25dp"
         android:id="@+id/txtrandevu"
@@ -93,10 +92,13 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="32dp"
         android:textSize="18sp"
-        android:background="@drawable/anaekrantextview" />
+        android:background="@drawable/anaekrantextview"
+        android:text="Randevularım"
+        android:textAlignment="center"
+        android:gravity="center" />
 
     <TextView
-        android:text="Tahlil Sonuçları"
+        android:text="Randevu Al"
         android:gravity="center"
         android:layout_width="143dp"
         android:layout_height="25dp"

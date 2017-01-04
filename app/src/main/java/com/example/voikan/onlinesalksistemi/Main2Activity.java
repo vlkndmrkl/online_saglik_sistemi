@@ -28,7 +28,7 @@ public class Main2Activity extends AppCompatActivity {
         gecis2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),doktor_anaekran.class);
+                Intent intent = new Intent(getApplicationContext(),kul_doktorum.class);
                 intent.putExtra("send_string", gelen_id);
                 startActivity(intent);
             }
@@ -55,16 +55,16 @@ public class Main2Activity extends AppCompatActivity {
         gecis5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),doktor_anaekran.class);
+                Intent intent = new Intent(getApplicationContext(),randevular.class);
                 intent.putExtra("send_string", gelen_id);
                 startActivity(intent);
             }
         });
-        gecis6= (ImageButton) findViewById(R.id.imgbtndoktorum);
+        gecis6= (ImageButton) findViewById(R.id.imageButton);
         gecis6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),kul_doktorum.class);
+                Intent intent = new Intent(getApplicationContext(),randevu_kontrol.class);
                 intent.putExtra("send_string", gelen_id);
                 startActivity(intent);
             }
