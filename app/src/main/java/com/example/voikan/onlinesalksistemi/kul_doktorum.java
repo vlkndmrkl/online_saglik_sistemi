@@ -35,7 +35,7 @@ public class kul_doktorum extends AppCompatActivity {
         doktor_bilgi=(ListView) findViewById(R.id.lstdoktor_bilgileri);
         doktor_bilgileri_getir();
     }
-    
+
     public void doktor_bilgileri_getir() {
         com.android.volley.RequestQueue MyRequestQueue = Volley.newRequestQueue(getApplicationContext());
         String adres = "http://mynodeapp3.herokuapp.com/gonderilen_mesajlar";
