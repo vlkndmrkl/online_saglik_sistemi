@@ -43,12 +43,20 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 public class giris extends AppCompatActivity {
-    Button btn;
+    Button btn,btnkaydol;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_giris);
+        btnkaydol=(Button) findViewById(R.id.btnkayit_gecis);
+        btnkaydol.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(giris.this,MainActivity.class);
+                startActivity(intent);
+            }
+        });
         btn = (Button) findViewById(R.id.btngiris);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +76,7 @@ public class giris extends AppCompatActivity {
                     public void onResponse(String response) {
                         String id= response;
                         String id2=new String(id.substring(1,(response.length()-1)));
-                        Intent intent = new Intent(giris.this,randevular.class);
+                        Intent intent = new Intent(giris.this,Main2Activity.class);
                         intent.putExtra("send_string", id2);
                         startActivity(intent);
                     }

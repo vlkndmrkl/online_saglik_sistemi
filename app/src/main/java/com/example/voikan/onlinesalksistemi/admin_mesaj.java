@@ -27,74 +27,42 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static android.R.layout.simple_list_item_1;
 
-public class sikayet extends AppCompatActivity {
-    TextView tv;
-    Button btn,btn2;
-    private String gelen_id,doktor_id;
-    private int status,statuskodmesajgonder;
+public class admin_mesaj extends AppCompatActivity {
+    private String gelen_id;
     private String icerik[];
-    ListView gonderilen;
+    ListView liste;
+    Button btn2,btn3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sikayet);
+        setContentView(R.layout.activity_admin_mesaj);
+        liste=(ListView) findViewById(R.id.deneme);
         Bundle extras = getIntent().getExtras();
         gelen_id= extras.getString("send_string");
-        btn=(Button) findViewById(R.id.btnadmin_mesaj_gonder);
-        gonderilen=(ListView) findViewById(R.id.lstgonderilen_mesajlar);
-        gonderilenler();
-        btn2 = (Button) findViewById(R.id.btnmesaj_goster);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                id_bul();
-            }
-        });
+        btn2=(Button) findViewById(R.id.btnadmin_mesaj_gonder);
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(sikayet.this,mesaj_gor.class);
+                mesaj_gonder();
+            }
+        });
+        btn3=(Button) findViewById(R.id.btnmesaj_goster2);
+        btn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(admin_mesaj.this,mesaj_gor.class);
                 intent.putExtra("send_string", gelen_id);
                 startActivity(intent);
             }
         });
+        gonderilenler();
     }
-    public void id_bul(){
-        RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
-        String url = "http://mynodeapp3.herokuapp.com/doktor_id_bul";
-        StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                if (status==200){
-                    doktor_id=new String(response.substring(47,(response.length()-2)));
-                    mesaj_gonder();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(sikayet.this, "Bilinmeyen Bir Hata Olşutu", Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                status=response.statusCode;
-                return super.parseNetworkResponse(response);
-            }
-
-            protected Map<String, String> getParams() {
-                Map<String, String> MyData = new HashMap<String, String>();
-                MyData.put("user_id", gelen_id);
-                return MyData;
-            }
-        };
-        MyRequestQueue.add(MyStringRequest);
-    }
-    protected void mesaj_gonder(){
+    public void mesaj_gonder(){
         final String mesajiniz = ((TextView) findViewById(R.id.etxtadmine_gonder2)).getText().toString();
         final String baslik = ((TextView) findViewById(R.id.etxtsikayet_baslik2)).getText().toString();
         RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
@@ -102,24 +70,19 @@ public class sikayet extends AppCompatActivity {
         StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(sikayet.this, "Mesajınız Gönderildi", Toast.LENGTH_SHORT).show();
+                Toast.makeText(admin_mesaj.this, "Mesajınız Gönderildi", Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(sikayet.this, "Bilinmeyen Bir Hata Oluştu", Toast.LENGTH_SHORT).show();
+                Toast.makeText(admin_mesaj.this, "Bilinmeyen Bir Hata Oluştu", Toast.LENGTH_SHORT).show();
             }
         }) {
-            @Override
-            protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                statuskodmesajgonder=response.statusCode;
-                return super.parseNetworkResponse(response);
-            }
 
             protected Map<String, String> getParams() {
                 Map<String, String> MyData = new HashMap<String, String>();
                 MyData.put("gonderen_id", gelen_id);
-                MyData.put("alici_id", doktor_id);
+                MyData.put("alici_id", "58449060754d4c16041d898f");
                 MyData.put("baslik", baslik);
                 MyData.put("mesaj", mesajiniz);
                 MyData.put("okundu", "0");
@@ -156,11 +119,11 @@ public class sikayet extends AppCompatActivity {
                         }
                     }
                     icerik=randevudizi2;
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(sikayet.this, simple_list_item_1, randevudizi);
-                    gonderilen.setAdapter(adapter);
-                    gonderilen.setOnItemClickListener(new sikayet.ListClickHandler());
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(admin_mesaj.this, simple_list_item_1, randevudizi);
+                    liste.setAdapter(adapter);
+                    liste.setOnItemClickListener(new admin_mesaj.ListClickHandler());
                 } catch (JSONException e) {
-                    Toast.makeText(sikayet.this, "HATA", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(admin_mesaj.this, "HATA", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
@@ -168,11 +131,11 @@ public class sikayet extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 NetworkResponse networkResponse=error.networkResponse;
                 if (networkResponse !=null && networkResponse.statusCode==404)
-                    Toast.makeText(sikayet.this, "Mesaj Bulunamadı", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(admin_mesaj.this, "Mesaj Bulunamadı", Toast.LENGTH_SHORT).show();
                 else if (networkResponse !=null && networkResponse.statusCode==500)
-                    Toast.makeText(sikayet.this, "Bilinmeyen Bir Hata Oluştu Tekrar Deneyiniz", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(admin_mesaj.this, "Bilinmeyen Bir Hata Oluştu Tekrar Deneyiniz", Toast.LENGTH_SHORT).show();
                 else
-                    Toast.makeText(sikayet.this, "Hata"+error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(admin_mesaj.this, "Hata"+error, Toast.LENGTH_SHORT).show();
             }
         }){
 
@@ -196,7 +159,7 @@ public class sikayet extends AppCompatActivity {
     public class ListClickHandler implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> adapter, View view, int position, long arg3) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(sikayet.this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(admin_mesaj.this);
             builder.setTitle("Mesaj Detayları");
             builder.setMessage(icerik[position]);
             builder.setPositiveButton("TAMAM", new DialogInterface.OnClickListener() {

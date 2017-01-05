@@ -97,4 +97,18 @@
         android:layout_marginRight="16dp"
         android:textSize="18sp" />
 
+    <Button
+        android:text="Admine Mesaj Gönder"
+        android:layout_width="265dp"
+        android:layout_height="54dp"
+        android:id="@+id/btnadmin_mesaj"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@+id/txtboy_kilo"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="16dp" />
+
 </android.support.constraint.ConstraintLayout>
